@@ -1,11 +1,26 @@
-import { TextField, Button } from "@mui/material"
+import { TextField, Button, Alert, AlertTitle, Snackbar } from "@mui/material"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import './style.css'
 // import Log in page
 export default function Registration() {
     const [email, setEmail] = useState('')
     const [password,setPassword] = useState('')
-    const [confirmPass, setConfirmPass] = useState('')
+    const [passwordConfirmation, setPasswordConfirmation] = useState('')
+    const [severity, setSeverity] = useState('success')
+    const [message, setMessage] = useState('')
+    const [open, setOpen] = useState('false')
+    const navigate = useNavigate()
+    const handleSignUpMessage = () => {
+        setOpen(true);
+    }
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+    }
     function onChangeEmail(e){
         setEmail(e.target.value)
         console.log(e.target.value)
@@ -15,29 +30,57 @@ export default function Registration() {
         setPassword(e.target.value)
     }
     function onChangeConfirmPass(e){
-        setConfirmPass(e.target.value)
+        setPasswordConfirmation(e.target.value)
         console.log(e.target.value)
     }
     async function onSubmit(e){
         e.preventDefault()
-        const response = await fetch('http://206.189.91.54/api/v1/auth/',{
-            method: "POST",
-            body:
-                {
-                    "email": "user1@example.com",
-                    "password": "12345678",
-                    "password_confirmation": "12345678"
-                }
-        })
-        const body = await response.json()
-        console.log(body)
+        console.log('Submitting')
+        try {
+            const response = await fetch('http://206.189.91.54/api/v1/auth/',{
+                headers: {'Content-Type': 'application/json'},
+                method: "POST",
+                body: JSON.stringify({
+                        email,
+                        password,
+                        password_confirmation : {passwordConfirmation}
+                    })
+                
+            })
+            const body = await response.json()
+            if(body.status === 'error'){
+                console.log(body.errors.full_messages[0])
+                setMessage(body.errors.full_messages[0])
+                setSeverity('error')
+            }
+            else{
+                setMessage('Sign Up successful!')
+                setSeverity('success')
+                setTimeout(() => {
+                    navigate('/dashboard')
+                }, 2000);
+                
+            }
+        }catch(error){
+            console.log(error)
+        }
+        finally{
+            handleSignUpMessage()
+        }
+        
     }
     return (
         <>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+                {message}
+            </Alert>
+        </Snackbar>
+        <div className="signUp">
             <form onSubmit={onSubmit}>
                 <h1>Sign Up</h1>
                 <TextField
-                required
+                // required
                 id="email-input"
                 label="Email"
                 defaultValue={email}
@@ -45,7 +88,7 @@ export default function Registration() {
                 onChange={onChangeEmail}
                 />
                 <TextField
-                required
+                // required
                 id="password-input"
                 label="Password"
                 type="password"
@@ -54,17 +97,19 @@ export default function Registration() {
                 onChange={onChangePassword}
                 />
                 <TextField
-                required
+                // required
                 id="confirm-password-input"
                 label="Confirm Password"
                 type="password"
                 helperText="Required*"
-                defaultValue={confirmPass}
+                defaultValue={passwordConfirmation}
                 onChange={onChangeConfirmPass}
                 />
                 <Button type="submit" variant="contained">Sign Up</Button>
             </form>
             <p>Already have an account? <Link to='/'>Log In</Link></p>
+        </div>
+            
         </>
     )
     }
