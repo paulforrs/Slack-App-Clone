@@ -51,14 +51,22 @@ export default function AddChannelDialog(prop) {
             <Dialog open={openChannelDialog} onClose={handleCloseChannelDialog}>
                 <DialogTitle>Create Channel</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            Create Channel
-                        </DialogContentText>
                         <TextField
                             autoFocus
                             margin="dense"
                             id="name"
                             label="Channel Name"
+                            defaultChecked={name}
+                            type="email"
+                            fullWidth
+                            variant="standard"
+                            onChange={handleChangeName}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="users"
+                            label="Add users"
                             defaultChecked={name}
                             type="email"
                             fullWidth

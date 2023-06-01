@@ -9,7 +9,7 @@ function App() {
   const [ user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')) || null)
   const [header, setHeader] = useState(JSON.parse(sessionStorage.getItem('header')) || null)
   const [allUsers, setAllUsers] = useState('')
-  const [channelList, setChannelList] = useState('')
+
   useEffect(()=>{
     console.log('reload')
     sessionStorage.setItem('user', JSON.stringify(user))

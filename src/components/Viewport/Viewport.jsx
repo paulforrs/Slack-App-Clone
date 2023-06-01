@@ -1,25 +1,23 @@
-import { Box } from '@mui/material'
+import { Box ,TextField, Button} from '@mui/material'
 import { useContext, useEffect } from 'react'
 import { ChannelIdContext } from '../../Helper/Context'
+import './style.css'
 
 export default function Viewport() {
     const {channelId, setChannelId} = useContext(ChannelIdContext)
     
     return (
-        <div>
-        <Box
-        sx={{
-            height: 200,
-            backgroundColor: 'primary.dark',
-            '&:hover': {
-            backgroundColor: 'primary.main',
-            opacity: [0.9, 0.8, 0.7],
-            },
-        }}
-
-        >
-            <p>ViewPort</p>
-        </Box>
-        </div>
+        <>
+            <Box className ='viewport'sx={{
+                backgroundColor: 'primary.dark',
+                }}>
+                <TextField
+                id=""
+                label=""
+                value='test'
+                />
+                <Button variant='outlined'>Send</Button>
+            </Box>
+        </>
   )
 }

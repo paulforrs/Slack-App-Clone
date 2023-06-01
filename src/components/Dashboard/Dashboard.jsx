@@ -9,7 +9,7 @@ import { LogInHeaderContext, UserContext, ChannelListContext, ChannelIdContext }
 export default function Dashboard() {
     const {user, setUser} = useContext(UserContext)
     const {header, setHeader} = useContext(LogInHeaderContext)
-    const {channelId, setChannelId} = useState('')
+    const [channelId, setChannelId] = useState('')
     const [channelList, setChannelList] = useState([])
     // Channels
     async function getChannels(){
@@ -35,9 +35,6 @@ export default function Dashboard() {
     useEffect(()=>{
         getChannels()
     },[])
-    useEffect(()=>{
-        console.log(channelId)
-    })
     // Get All users
     useEffect(()=>{
         async function getUsers(){
@@ -58,19 +55,23 @@ export default function Dashboard() {
         getUsers()
     }, [header])
     useEffect(()=>{
-        async function getChannelDetails(){
-            const getChannelDetailsResponse = await fetch('http://206.189.91.54/api/v1/channels/3',{
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'access-token': header.accessToken,
-                    'client' : header.client,
-                    'expiry': header.expiry,
-                    'uid': header.uid
-                }
-            })
-        }
-    })
+        console.log(channelId)
+    },[channelId])
+    async function getChannelDetails(){
+        const getChannelDetailsResponse = await fetch(`http://206.189.91.54/api/v1/channels/${channelId}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'access-token': header.accessToken,
+                'client' : header.client,
+                'expiry': header.expiry,
+                'uid': header.uid
+            }
+        })
+        const body = await getChannelDetailsResponse.json()
+        console.log(body)
+    }
+    getChannelDetails()
     return (
         <>  
         <ChannelIdContext.Provider value={{channelId, setChannelId}}>
@@ -79,10 +80,10 @@ export default function Dashboard() {
             <Box component='div' className="dashboard"
             maxWidth= 'xl'
             height='xl'>
-                <div className="sidebar">
+                <div className="sidebarWrapper">
                     <Sidebar getChannels={getChannels}/>
                 </div>
-                <div className="viewport">
+                <div className="viewportWrapper">
                     <Viewport/>
                 </div>
             </Box>

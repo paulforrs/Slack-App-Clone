@@ -26,15 +26,12 @@ export default function Registration() {
     }
     function onChangeEmail(e){
         setEmail(e.target.value)
-        console.log(e.target.value)
     }
     function onChangePassword(e){
-        console.log(e.target.value)
         setPassword(e.target.value)
     }
     function onChangeConfirmPass(e){
         setPasswordConfirmation(e.target.value)
-        console.log(e.target.value)
     }
     async function onSuccessSignUp(){
         try{
@@ -57,7 +54,6 @@ export default function Registration() {
                 expiry,
                 uid
             })
-            console.log(body.data)
             setUser(body.data)
             navigate('/dashboard')
         }catch(error){
@@ -66,7 +62,6 @@ export default function Registration() {
     }
     async function onSubmit(e){
         e.preventDefault()
-        console.log('Submitting')
         try {
             const response = await fetch('http://206.189.91.54/api/v1/auth/',{
                 headers: {'Content-Type': 'application/json'},

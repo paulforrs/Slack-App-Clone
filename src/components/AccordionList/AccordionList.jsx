@@ -1,24 +1,32 @@
 import {ListItem,ListItemAvatar, Avatar, ListItemText} from '@mui/material'
 import { useContext } from 'react';
 import GroupIcon from '@mui/icons-material/Group';
-import { ChannelListContext } from '../../Helper/Context';
+import { ChannelIdContext, ChannelListContext } from '../../Helper/Context';
 
 
 export default function AccordionList(prop) {
     const {list} = prop
-    const {channelId, setChannelId} = useContext(ChannelListContext)
-    console.log(list)
+    const {channelId, setChannelId} = useContext(ChannelIdContext)
+    function handleListClick(e){
+        setChannelId(e.currentTarget.id)
+        console.log(e.currentTarget.id)
+
+    }
 
     const listElements = list.map((elem)=>{
-        console.log(elem)
+
         return (
-            <ListItem  key={elem.id} className='accordion-item' id={elem.id}>
+            <ListItem  components='li' key={elem.id} className='accordion-item' id={elem.id} onClick={(e)=>{handleListClick(e)}}
+                sx={{height: 50}}>
                 <ListItemAvatar>
                     <Avatar>
                         <GroupIcon />
                     </Avatar>
                 </ListItemAvatar>
-                <ListItemText
+                <ListItemText 
+                    sx={{flexGrow: 2,
+                        fontSize: 10
+                    }}
                     primary={elem.name}
                 />
             </ListItem>

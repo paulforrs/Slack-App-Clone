@@ -1,4 +1,4 @@
 .sidebar{
-    padding: 10px;
     overflow: auto;
+    height: 100%;
 }

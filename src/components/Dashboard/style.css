@@ -6,3 +6,11 @@
     height: 100vh;
     width: 100vw;
 }
+.sidebarWrapper{
+    width: 30%;
+    height: 100%;
+}
+.viewportWrapper{
+    width: auto;
+    height: 100%;
+}
