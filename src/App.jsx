@@ -4,11 +4,12 @@ import Registration from './components/Auth/Registration/Registration'
 import Home from './components/Home/Home'
 import Dashboard from './components/Dashboard/Dashboard'
 import { useEffect, useState } from 'react'
-import { LogInHeaderContext, UserContext } from './Helper/Context'
+import { LogInHeaderContext, UserContext, AllUsersContext } from './Helper/Context'
 function App() { 
   const [ user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')) || null)
   const [header, setHeader] = useState(JSON.parse(sessionStorage.getItem('header')) || null)
   const [allUsers, setAllUsers] = useState('')
+  const [channelList, setChannelList] = useState('')
   useEffect(()=>{
     console.log('reload')
     sessionStorage.setItem('user', JSON.stringify(user))
@@ -18,6 +19,7 @@ function App() {
     sessionStorage.setItem('header', JSON.stringify(header))
   },[header])
   return (
+    <AllUsersContext.Provider value={{allUsers, setAllUsers}}>
     <UserContext.Provider value={{user, setUser}}>
     <LogInHeaderContext.Provider value={{header,setHeader}}>
       <Routes>
@@ -27,6 +29,8 @@ function App() {
       </Routes>
     </LogInHeaderContext.Provider>
     </UserContext.Provider>
+    </AllUsersContext.Provider>
+    
   )
 }
 

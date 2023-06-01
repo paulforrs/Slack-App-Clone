@@ -7,11 +7,7 @@ export default function AddChannelDialog(prop) {
     const [name, setName] = useState('')
     const [user_ids, setUser_ids] = useState([])
     const {header, setHeader} = useContext(LogInHeaderContext)
-    const {openChannelDialog, handleCloseChannelDialog} = prop
-    useEffect(()=>{
-        console.log(user_ids)
-        console.log(header)
-    })
+    const {openChannelDialog, handleCloseChannelDialog, getChannels} = prop
     const handleCreateChannel =()=>{
         if(name.length > 0){
             createChannel()
@@ -28,11 +24,13 @@ export default function AddChannelDialog(prop) {
     const createChannel= async ()=>{
         try{
             const response = await fetch('http://206.189.91.54/api/v1/channels',{
-                header: JSON.stringify(
-                    {
-                        'Content-Type': 'application/json',
-                        
-                    }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'access-token': header.accessToken,
+                    'client' : header.client,
+                    'expiry': header.expiry,
+                    'uid': header.uid
+                },
                 method: 'POST',
                 body: JSON.stringify(
                     {
@@ -42,6 +40,7 @@ export default function AddChannelDialog(prop) {
                 )
             })
             const body = await response.json()
+            getChannels()
             console.log(body)
         }catch(error){
             console.log(error)

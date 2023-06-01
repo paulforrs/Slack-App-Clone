@@ -101,45 +101,44 @@ export default function Registration() {
     }
     return (
         <>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-                {message}
-            </Alert>
-        </Snackbar>
-        <div className="signUp">
-            <form onSubmit={onSubmit}>
-                <h1>Sign Up</h1>
-                <TextField
-                // required
-                id="email-input"
-                label="Email"
-                defaultValue={email}
-                helperText="Required*"
-                onChange={onChangeEmail}
-                />
-                <TextField
-                // required
-                id="password-input"
-                label="Password"
-                type="password"
-                defaultValue={password}
-                helperText="Required*"
-                onChange={onChangePassword}
-                />
-                <TextField
-                // required
-                id="confirm-password-input"
-                label="Confirm Password"
-                type="password"
-                helperText="Required*"
-                defaultValue={passwordConfirmation}
-                onChange={onChangeConfirmPass}
-                />
-                <Button type="submit" variant="contained">Sign Up</Button>
-            </form>
-            <p>Already have an account? <Link to='/'>Log In</Link></p>
-        </div>
-            
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+                    {message}
+                </Alert>
+            </Snackbar>
+            <div className="signUp">
+                <form onSubmit={onSubmit}>
+                    <h1>Sign Up</h1>
+                    <TextField
+                    // required
+                    id="email-input"
+                    label="Email"
+                    defaultValue={email}
+                    helperText="Required*"
+                    onChange={onChangeEmail}
+                    />
+                    <TextField
+                    // required
+                    id="password-input"
+                    label="Password"
+                    type="password"
+                    defaultValue={password}
+                    helperText="Required*"
+                    onChange={onChangePassword}
+                    />
+                    <TextField
+                    // required
+                    id="confirm-password-input"
+                    label="Confirm Password"
+                    type="password"
+                    helperText="Required*"
+                    defaultValue={passwordConfirmation}
+                    onChange={onChangeConfirmPass}
+                    />
+                    <Button type="submit" variant="contained">Sign Up</Button>
+                </form>
+                <p>Already have an account? <Link to='/'>Log In</Link></p>
+            </div>
         </>
     )
     }
