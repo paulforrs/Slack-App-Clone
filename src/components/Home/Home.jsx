@@ -1,15 +1,22 @@
 import { Link } from "react-router-dom"
 import {Button} from '@mui/material'
+import './style.css'
 
 export default function Home() {
   return (
-    <div>
-        <Button variant="contained">
-            <Link to='/register'> Sign Up</Link>
-        </Button>
-        <Button variant="outlined">
-            <Link to='/'>Log In</Link>
-        </Button>
+    <div className="home">
+       
+        <Link to='/register' className="auth-button">
+          <Button variant="contained" className="auth-button">
+            Sign Up
+          </Button>
+        </Link>
+        <Link to='/log-in' className="auth-button">
+          <Button variant="outlined" className="auth-button">
+            Log In
+          </Button>
+        </Link>
+        
       
     </div>
   )

@@ -3,26 +3,24 @@ import Sidebar from "../Sidebar/Sidebar";
 import Viewport from "../Viewport/Viewport";
 import './style.css'
 import Navbar from "../Navbar/Navbar";
+import { useNavigate } from "react-router";
 import { useContext, useEffect, useState } from "react";
-import { LogInHeaderContext, UserContext, ChannelListContext, ChannelIdContext } from "../../Helper/Context";
+import { HeaderContext,MessagesContext, UserContext, ChannelListContext, ChannelIdContext, AllUsersContext } from "../../Helper/Context";
 
 export default function Dashboard() {
     const {user, setUser} = useContext(UserContext)
-    const {header, setHeader} = useContext(LogInHeaderContext)
-    const {channelId, setChannelId} = useState('')
+    const {header, setHeader} = useContext(HeaderContext)
+    const {allUsers, setAllUsers} = useContext(AllUsersContext)
+    const [receiverId, setReceiverId] = useState('')
     const [channelList, setChannelList] = useState([])
-    // Channels
+    const [messages, setMessages] = useState([])
+    const navigate = useNavigate()
+    // Fetch Channels List
     async function getChannels(){
         try {
             const getChannelsResponse = await fetch('http://206.189.91.54/api/v1/channels',{
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'access-token': header.accessToken,
-                'client' : header.client,
-                'expiry': header.expiry,
-                'uid': header.uid
-            },
+            headers: header
         })
         const body = await getChannelsResponse.json()
         setChannelList(body.data || [])
@@ -35,60 +33,54 @@ export default function Dashboard() {
     useEffect(()=>{
         getChannels()
     },[])
-    useEffect(()=>{
-        console.log(channelId)
-    })
+ 
     // Get All users
     useEffect(()=>{
         async function getUsers(){
             const getUsetsResponse = await fetch('http://206.189.91.54/api/v1/users',{
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'access-token': header.accessToken,
-                    'client' : header.client,
-                    'expiry': header.expiry,
-                    'uid': header.uid
-                }
+                headers: header
             })
             const body = await getUsetsResponse.json()
-            console.log(body)
+            setAllUsers(body.data)
         }
 
         getUsers()
-    }, [header])
+    }, [])
     useEffect(()=>{
-        async function getChannelDetails(){
-            const getChannelDetailsResponse = await fetch('http://206.189.91.54/api/v1/channels/3',{
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'access-token': header.accessToken,
-                    'client' : header.client,
-                    'expiry': header.expiry,
-                    'uid': header.uid
-                }
-            })
-        }
-    })
+        console.log(allUsers)
+    },[])
+    // useEffect(()=>{
+    //     console.log(channelId)
+    // },[channelId])
+    async function getChannelDetails(){
+        const getChannelDetailsResponse = await fetch(`http://206.189.91.54/api/v1/channels/${receiverId}`,{
+            method: 'GET',
+            headers: header
+        })
+        const body = await getChannelDetailsResponse.json()
+    }
+    // getChannelDetails()
     return (
-        <>  
-        <ChannelIdContext.Provider value={{channelId, setChannelId}}>
-        <ChannelListContext.Provider value={{channelList, setChannelList}}>
-            <Navbar/>
-            <Box component='div' className="dashboard"
-            maxWidth= 'xl'
-            height='xl'>
-                <div className="sidebar">
-                    <Sidebar getChannels={getChannels}/>
-                </div>
-                <div className="viewport">
-                    <Viewport/>
-                </div>
-            </Box>
-        </ChannelListContext.Provider>
-        </ChannelIdContext.Provider>
-        </>
+        <div className="dashboardWrapper">  
+            <MessagesContext.Provider value={{messages, setMessages}}>
+                <ChannelIdContext.Provider value={{receiverId, setReceiverId}}>
+                    <ChannelListContext.Provider value={{channelList, setChannelList}}>
+                        <Navbar/>
+                        <Box component='div' className="dashboard"
+                        maxWidth= 'xl'
+                        height='xl'>
+                            <div className="sidebarWrapper">
+                                <Sidebar getChannels={getChannels}/>
+                            </div>
+                            <div className="viewportWrapper">
+                                <Viewport/>
+                            </div>
+                        </Box>
+                    </ChannelListContext.Provider>
+                </ChannelIdContext.Provider>
+            </MessagesContext.Provider>
+        </div>
     
   )
 }
