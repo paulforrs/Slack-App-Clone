@@ -1,0 +1,12 @@
+.home{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100vh;
+    justify-content: center;
+    align-content: center;
+    margin: auto;
+}
+.auth-button{
+    margin: 30px;
+}

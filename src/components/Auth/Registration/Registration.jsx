@@ -1,12 +1,13 @@
 import { TextField, Button, Alert, Snackbar } from "@mui/material"
 import { useContext, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { LogInHeaderContext, UserContext } from "../../../Helper/Context"
+import { HeaderContext, UserAuthContext, UserContext } from "../../../Helper/Context"
 import './style.css'
 // import Log in page
 export default function Registration() {
     const {user, setUser} = useContext(UserContext)
-    const {header,setHeader} = useContext(LogInHeaderContext)
+    const {header,setHeader} = useContext(HeaderContext)
+    const {authUser} = useContext(UserAuthContext)
     const [email, setEmail] = useState('')
     const [password,setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
@@ -33,33 +34,7 @@ export default function Registration() {
     function onChangeConfirmPass(e){
         setPasswordConfirmation(e.target.value)
     }
-    async function onSuccessSignUp(){
-        try{
-            const response = await fetch('http://206.189.91.54/api/v1/auth/sign_in',{
-                headers: {'Content-Type': 'application/json'},
-                method: "POST",
-                body: JSON.stringify({
-                        email,
-                        password,
-                    })
-            })
-            const accessToken =  response.headers.get('access-token')
-            const client =  response.headers.get('client')
-            const expiry =  response.headers.get('expiry')
-            const uid =   response.headers.get('uid')
-            const body =  await response.json()
-            setHeader({
-                accessToken,
-                client,
-                expiry,
-                uid
-            })
-            setUser(body.data)
-            navigate('/dashboard')
-        }catch(error){
-            console.log(error)
-        }
-    }
+    
     async function onSubmit(e){
         e.preventDefault()
         try {
@@ -83,7 +58,7 @@ export default function Registration() {
             else{
                 setMessage('Sign Up successful!')
                 setSeverity('success')
-                onSuccessSignUp();
+                authUser({email, password});
                 
             }
         }catch(error){

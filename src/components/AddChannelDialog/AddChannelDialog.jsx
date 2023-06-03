@@ -1,13 +1,17 @@
 
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, Autocomplete, TextField, DialogActions } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import { LogInHeaderContext } from '../../Helper/Context';
+import { AllUsersContext, HeaderContext } from '../../Helper/Context';
+import AddUserSearchBar from '../AddUserSearchBar/AddUserSearchBar';
+import './style.css'
 
 export default function AddChannelDialog(prop) {
+    const {openChannelDialog, handleCloseChannelDialog, getChannels} = prop
+    const {header, setHeader} = useContext(HeaderContext)
+    const {allUsers, setAllUsers} = useContext(AllUsersContext)
     const [name, setName] = useState('')
     const [user_ids, setUser_ids] = useState([])
-    const {header, setHeader} = useContext(LogInHeaderContext)
-    const {openChannelDialog, handleCloseChannelDialog, getChannels} = prop
+    const [message, setMessage] = useState('')
     const handleCreateChannel =()=>{
         if(name.length > 0){
             createChannel()
@@ -16,7 +20,6 @@ export default function AddChannelDialog(prop) {
         else{
             alert('Channel name can\'t be empty')
         }
-        
     }
     const handleChangeName=(e)=>{
         setName(e.target.value)
@@ -24,13 +27,7 @@ export default function AddChannelDialog(prop) {
     const createChannel= async ()=>{
         try{
             const response = await fetch('http://206.189.91.54/api/v1/channels',{
-                headers: {
-                    'Content-Type': 'application/json',
-                    'access-token': header.accessToken,
-                    'client' : header.client,
-                    'expiry': header.expiry,
-                    'uid': header.uid
-                },
+                headers: header,
                 method: 'POST',
                 body: JSON.stringify(
                     {
@@ -41,16 +38,29 @@ export default function AddChannelDialog(prop) {
             })
             const body = await response.json()
             getChannels()
-            console.log(body)
+            if('errors' in body){
+                console.log(body.errors[0])
+                setMessage(body.errors[0])
+            }
+            else if('data' in body){
+                setMessage(`${name} has been created`)
+            }
+            
         }catch(error){
             console.log(error)
+        }finally{
+            setName('')
         }
     }
+    useEffect(()=>{
+        return setName('')
+        
+    },[])
     return (
-        <div>
-            <Dialog open={openChannelDialog} onClose={handleCloseChannelDialog}>
+        <>
+            <Dialog className='addChannelDialog' id='dialogbox'open={openChannelDialog} onClose={handleCloseChannelDialog}>
                 <DialogTitle>Create Channel</DialogTitle>
-                    <DialogContent>
+                    <DialogContent id='dialogContent'>
                         <TextField
                             autoFocus
                             margin="dense"
@@ -62,23 +72,13 @@ export default function AddChannelDialog(prop) {
                             variant="standard"
                             onChange={handleChangeName}
                         />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="users"
-                            label="Add users"
-                            defaultChecked={name}
-                            type="email"
-                            fullWidth
-                            variant="standard"
-                            onChange={handleChangeName}
-                        />
+                        <AddUserSearchBar/>
                     </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseChannelDialog}>Cancel</Button>
                     <Button onClick={handleCreateChannel}>Create Channel</Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </>
     );
 }

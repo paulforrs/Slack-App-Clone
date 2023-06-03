@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Box, AppBar, Toolbar, IconButton, Typography, MenuItem, Menu} from "@mui/material";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
+import { HeaderContext, UserContext } from "../../Helper/Context";
+import { useNavigate } from "react-router";
 export default function Navbar() {
+    const {user, setUser} = useContext(UserContext)
+    const {header, setHeader} =useContext(HeaderContext)
     const [auth, setAuth] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
+    const navigate = useNavigate()
   
     // const handleChange = (event) => {
     //   setAuth(event.target.checked);
@@ -17,9 +22,14 @@ export default function Navbar() {
     const handleClose = () => {
       setAnchorEl(null);
     };
+    const handleLogOut=()=>{
+      setUser(null)
+      setHeader(null)
+      navigate('/')
+    }
   
     return (
-      <Box sx={{ flexGrow: 1 }}>
+      <Box component='div'sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
             <IconButton
@@ -62,6 +72,7 @@ export default function Navbar() {
                 >
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
                   <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
                 </Menu>
               </div>
             )}

@@ -6,17 +6,17 @@ import { ChannelIdContext, ChannelListContext } from '../../Helper/Context';
 
 export default function AccordionList(prop) {
     const {list} = prop
+    console.log(list)
     const {channelId, setChannelId} = useContext(ChannelIdContext)
     function handleListClick(e){
         setChannelId(e.currentTarget.id)
-        console.log(e.currentTarget.id)
-
     }
 
     const listElements = list.map((elem)=>{
-
+        console.log(elem)
         return (
-            <ListItem  components='li' key={elem.id} className='accordion-item' id={elem.id} onClick={(e)=>{handleListClick(e)}}
+            <ListItem  components='li' key={elem.id} className='accordion-item' id={elem.id} 
+            data-id = {elem.id} onClick={(e)=>{handleListClick(e)}}
                 sx={{height: 50}}>
                 <ListItemAvatar>
                     <Avatar>

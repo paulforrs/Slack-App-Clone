@@ -1,7 +1,7 @@
 import { Container,Stack } from "@mui/material"
 import AccordionMenu from "../AccordionMenu/AccordionMenu"
 import { useState, useEffect } from "react"
-import AddChannelDialog from "../AddChanngelDialog/AddChannelDialog"
+import AddChannelDialog from "../AddChannelDialog/AddChannelDialog"
 import { ChannelListContext } from '../../Helper/Context';
 import { useContext } from "react"
 import './style.css'

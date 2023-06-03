@@ -1,7 +1,20 @@
-.viewport{
+#viewportContainer{
+    display: grid;
+    grid-template-rows: 1fr auto;
+    background-color: white;
     height: 100%;
-    width: 100%;
 }
-.viewport *{
-    color: white;
+#messagesContainer{
+    height: 100%;
+}
+#input-section{
+    border-top: solid 2px rgb(117, 118, 117);
+    display: flex;
+    padding: 20px 50px;
+}
+#message{
+    max-width: 500px;
+    width: 70%;
+    background-color: gray;
+    padding: 10px;
 }
