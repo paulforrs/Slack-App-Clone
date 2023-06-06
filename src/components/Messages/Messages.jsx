@@ -1,6 +1,6 @@
 import{ useContext, useEffect,useRef} from 'react'
 import { MessagesContext } from '../../Helper/Context'
-import MessageItem from './MessageItem/MessageItem'
+import MessageItem from './MessageItem'
 
 export default function Message() {
     const {messages, setMessages} = useContext(MessagesContext)
