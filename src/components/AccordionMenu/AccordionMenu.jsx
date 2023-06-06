@@ -10,7 +10,7 @@ import {    Accordion,
         } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
-import AccordionList from '../AccordionList/AccordionList';
+import AccordionList from './AccordionList';
 import './style.css'
 
 export default function AccordionMenu(prop) {

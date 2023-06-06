@@ -10,9 +10,6 @@ export default function Sidebar(prop) {
     const {getChannels, getChannelDetails}= prop
     const [openChannelDialog, setOpenChannelDialog] = useState(false)
     const {channelList, setChannelList} = useContext(ChannelListContext)
-    const CHANNEL = 'Channel'
-    const USER = 'User'
-
     const handleOpenChannelDialog=()=>{
         console.log('opens')
         setOpenChannelDialog(true)

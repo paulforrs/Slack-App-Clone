@@ -4,7 +4,7 @@ import Registration from './components/Auth/Registration/Registration'
 import Home from './components/Home/Home'
 import Dashboard from './components/Dashboard/Dashboard'
 import { useEffect, useState } from 'react'
-import { HeaderContext, ReceiverContext, UserContext, AllUsersContext, UserAuthContext } from './Helper/Context'
+import { HeaderContext, UserContext, AllUsersContext, UserAuthContext } from './Helper/Context'
 import LogIn from './components/Auth/LogIn/LogIn'
 
 function App() { 
