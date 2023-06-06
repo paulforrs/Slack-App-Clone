@@ -1,5 +1,4 @@
-.sidebarWrapper{
-    grid-column-end: 1;
-    grid-column-start: 1;
-    width: 350px;
+#input-section{
+    max-height: 1000px;
+    height: auto;
 }
