@@ -4,7 +4,7 @@ import Registration from './components/Auth/Registration/Registration'
 import Home from './components/Home/Home'
 import Dashboard from './components/Dashboard/Dashboard'
 import { useEffect, useState } from 'react'
-import { HeaderContext, UserContext, AllUsersContext, UserAuthContext } from './Helper/Context'
+import { HeaderContext, ReceiverContext, UserContext, AllUsersContext, UserAuthContext } from './Helper/Context'
 import LogIn from './components/Auth/LogIn/LogIn'
 
 function App() { 
@@ -43,6 +43,7 @@ function App() {
         else{
           console.log(body)
           setUser(body.data)
+          console.log(body.data)
           navigate('/dashboard')
         }
         
@@ -61,20 +62,21 @@ useEffect(()=>{
   },[header ,user])
 
   return (
-    <AllUsersContext.Provider value={{allUsers, setAllUsers}}>
-      <UserContext.Provider value={{user, setUser}}>
-        <HeaderContext.Provider value={{header,setHeader}}>
-          <UserAuthContext.Provider value={{authUser}}>
-            <Routes>
-                <Route path='/register' Component={Registration}/>
-                <Route path='/log-in' Component={LogIn}/>
-                <Route path='/' Component={Home}/>
-                <Route path='/dashboard' Component={Dashboard}/>
-            </Routes>
-          </UserAuthContext.Provider>
-        </HeaderContext.Provider>
-      </UserContext.Provider>
-    </AllUsersContext.Provider>
+      <AllUsersContext.Provider value={{allUsers, setAllUsers}}>
+        <UserContext.Provider value={{user, setUser}}>
+          <HeaderContext.Provider value={{header,setHeader}}>
+            <UserAuthContext.Provider value={{authUser}}>
+              <Routes>
+                  <Route path='/register' Component={Registration}/>
+                  <Route path='/log-in' Component={LogIn}/>
+                  <Route path='/' Component={Home}/>
+                  <Route path='/dashboard' Component={Dashboard}/>
+              </Routes>
+            </UserAuthContext.Provider>
+          </HeaderContext.Provider>
+        </UserContext.Provider>
+      </AllUsersContext.Provider>
+    
     
   )
 }

@@ -5,13 +5,14 @@ import './style.css'
 import Navbar from "../Navbar/Navbar";
 import { useNavigate } from "react-router";
 import { useContext, useEffect, useState } from "react";
-import { HeaderContext,MessagesContext, UserContext, ChannelListContext, ChannelIdContext, AllUsersContext } from "../../Helper/Context";
+import { HeaderContext,MessagesContext, UserContext, ChannelListContext, ReceiverIdContext, AllUsersContext, ReceiverClassContext } from "../../Helper/Context";
 
 export default function Dashboard() {
     const {user, setUser} = useContext(UserContext)
     const {header, setHeader} = useContext(HeaderContext)
     const {allUsers, setAllUsers} = useContext(AllUsersContext)
     const [receiverId, setReceiverId] = useState('')
+    const [receiverClass, setReceiverClass] = useState('')
     const [channelList, setChannelList] = useState([])
     const [messages, setMessages] = useState([])
     const navigate = useNavigate()
@@ -53,6 +54,7 @@ export default function Dashboard() {
     // useEffect(()=>{
     //     console.log(channelId)
     // },[channelId])
+    // getChannelDetails()
     async function getChannelDetails(){
         const getChannelDetailsResponse = await fetch(`http://206.189.91.54/api/v1/channels/${receiverId}`,{
             method: 'GET',
@@ -60,26 +62,28 @@ export default function Dashboard() {
         })
         const body = await getChannelDetailsResponse.json()
     }
-    // getChannelDetails()
+ 
     return (
         <div className="dashboardWrapper">  
-            <MessagesContext.Provider value={{messages, setMessages}}>
-                <ChannelIdContext.Provider value={{receiverId, setReceiverId}}>
-                    <ChannelListContext.Provider value={{channelList, setChannelList}}>
-                        <Navbar/>
-                        <Box component='div' className="dashboard"
-                        maxWidth= 'xl'
-                        height='xl'>
-                            <div className="sidebarWrapper">
-                                <Sidebar getChannels={getChannels}/>
-                            </div>
-                            <div className="viewportWrapper">
-                                <Viewport/>
-                            </div>
-                        </Box>
-                    </ChannelListContext.Provider>
-                </ChannelIdContext.Provider>
-            </MessagesContext.Provider>
+            <ReceiverClassContext.Provider value={{receiverClass, setReceiverClass}}>
+                <MessagesContext.Provider value={{messages, setMessages}}>
+                    <ReceiverIdContext.Provider value={{receiverId, setReceiverId}}>
+                        <ChannelListContext.Provider value={{channelList, setChannelList}}>
+                            <Navbar/>
+                            <Box component='div' className="dashboard"
+                            maxWidth= 'xl'
+                            height='xl'>
+                                <div className="sidebarWrapper">
+                                    <Sidebar getChannels={getChannels}/>
+                                </div>
+                                <div className="viewportWrapper">
+                                    <Viewport/>
+                                </div>
+                            </Box>
+                        </ChannelListContext.Provider>
+                    </ReceiverIdContext.Provider>
+                </MessagesContext.Provider>
+            </ReceiverClassContext.Provider>
         </div>
     
   )

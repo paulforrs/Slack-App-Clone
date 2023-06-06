@@ -14,7 +14,7 @@ import AccordionList from '../AccordionList/AccordionList';
 import './style.css'
 
 export default function AccordionMenu(prop) {
-    const {title,handleOpenChannelDialog, list} = prop
+    const {title,handleOpenChannelDialog, list, receiver} = prop
     const [expanded, setExpanded] = useState(false);
     
 
@@ -45,7 +45,7 @@ export default function AccordionMenu(prop) {
                         />
                     </ListItem>
                     {/* List Component */}
-                    <AccordionList list={list}/>
+                    <AccordionList list={list} receiver ={receiver}/>
                 </AccordionDetails>
             </Accordion>
         </div>
