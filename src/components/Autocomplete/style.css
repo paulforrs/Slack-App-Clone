@@ -2,3 +2,6 @@
 #autocompleteList{
     position: absolute;
 }
+.active{
+    font-weight: 700;
+}

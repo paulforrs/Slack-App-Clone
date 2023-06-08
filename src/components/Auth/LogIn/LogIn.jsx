@@ -8,10 +8,9 @@ export default function LogIn() {
     const [email, setEmail] = useState('')
     const [password,setPassword] = useState('')
     const handleChangeEmail =(e)=>{
-        console.log(e.target.value)
         setEmail(e.target.value)
     }
-    const handlePassworrdChange = (e)=>{
+    const handlePasswordChange = (e)=>{
         setPassword(e.target.value)
     }
     const handleSubmit= (e)=>{
@@ -23,7 +22,7 @@ export default function LogIn() {
             <h1>Log In</h1>
             <form action="">
                 <input onChange={handleChangeEmail} type="text" value={email}/>
-                <input onChange={handlePassworrdChange}type="password" value={password}/>
+                <input onChange={handlePasswordChange} type="password" value={password}/>
                 <button type="submit" onClick={handleSubmit}>Log in</button>
             </form>
         </div>

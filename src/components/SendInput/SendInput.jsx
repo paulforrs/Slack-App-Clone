@@ -27,10 +27,10 @@ export default function SendInput() {
         method: 'POST',
         headers: header,
         body: JSON.stringify({
-            // "receiver_id": receiverId,
-            // "receiver_class": receiverClass,
-            "receiver_id": 3503,
-            "receiver_class": 'User',
+            "receiver_id": receiverId,
+            "receiver_class": receiverClass,
+            // "receiver_id": 3503,
+            // "receiver_class": 'User',
             "body": messageBody
         })
     })

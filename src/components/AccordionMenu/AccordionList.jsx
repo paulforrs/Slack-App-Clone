@@ -5,7 +5,7 @@ import { ReceiverIdContext, HeaderContext, MessagesContext, ReceiverClassContext
 
 
 export default function AccordionList(prop) {
-    const {list, receiver} = prop
+    const {list, receiver, getMessages} = prop
     const {receiverId, setReceiverId} = useContext(ReceiverIdContext)
     const {messages, setMessages} = useContext(MessagesContext)
     const {header, setHeader} = useContext(HeaderContext)
@@ -13,21 +13,13 @@ export default function AccordionList(prop) {
 
     function handleListClick(e){
         const id = e.currentTarget.id
-        getMessages(receiver, id)
+        console.log('clicked')
+        getMessages({receiver, id})
         setReceiverClass(receiver)
         setReceiverId(id)
     }
 
-    // Retreive Messages
-    async function getMessages(receiver, id){
-        const getMessagerResponse = await fetch(`http://206.189.91.54/api/v1/messages?receiver_id=${id}&receiver_class=${receiver}`,{
-            method: 'GET',
-            headers: header
-        })
-        const body = await getMessagerResponse.json()
-        setMessages(body.data)
-        console.log(body.data)
-    }
+    
 
     const listElements = list.map((elem)=>{
         return (

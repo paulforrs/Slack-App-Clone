@@ -7,7 +7,7 @@ import { useContext } from "react"
 import './style.css'
 
 export default function Sidebar(prop) {
-    const {getChannels, getChannelDetails}= prop
+    const {getChannels, getMessages}= prop
     const [openChannelDialog, setOpenChannelDialog] = useState(false)
     const {channelList, setChannelList} = useContext(ChannelListContext)
     const handleOpenChannelDialog=()=>{
@@ -31,8 +31,12 @@ export default function Sidebar(prop) {
                     openChannelDialog={openChannelDialog}
                     list={channelList} 
                     updateMenu={getChannels}
-                    receiver = {'Channel'}/>
-                    <AccordionMenu title={'Direct Message'} list={channelList} receiver = {'Users'}/>
+                    receiver = {'Channel'}
+                    getMessages={getMessages}/>
+                    <AccordionMenu title={'Direct Message'}
+                    list={channelList}
+                    receiver = {'Users'}
+                    getMessages={getMessages}/>
                 </Stack>
             </Container>
             <AddChannelDialog handleCloseChannelDialog={handleCloseChannelDialog} openChannelDialog={openChannelDialog} getChannels={getChannels}/>

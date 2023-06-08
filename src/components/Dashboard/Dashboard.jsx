@@ -1,3 +1,4 @@
+
 import { Box } from "@mui/system";
 import Sidebar from "../Sidebar/Sidebar";
 import Viewport from "../Viewport/Viewport";
@@ -15,7 +16,44 @@ export default function Dashboard() {
     const [receiverClass, setReceiverClass] = useState('')
     const [channelList, setChannelList] = useState([])
     const [messages, setMessages] = useState([])
+
+    // CACHING TEST
+    const now = new Date().getTime()
+    console.log(now)
+    const cache = {}
+    let cacheTimer = 0
+    // CACHING TEST
+    
     const navigate = useNavigate()
+    // Retreive Messages
+    async function getMessages(prop){
+        const {receiver, id} = prop
+        const getMessagerResponse = await fetch(`http://206.189.91.54/api/v1/messages?receiver_id=${id}&receiver_class=${receiver}`,{
+            method: 'GET',
+            headers: header
+        })
+        const body = await getMessagerResponse.json()
+        setMessages(body.data)
+    }
+    async function getDirectMessages(){
+        const RECEIVER_CLASS = 'User'
+        const allUserId = allUsers.map(user =>{
+            return user.id
+        })
+        const directMessageList = allUserId.map( async (id)=>{
+            fetch(`http://206.189.91.54/api/v1/messages?receiver_id=${id}&receiver_class=${RECEIVER_CLASS}`,{
+                method: 'GET',
+                headers: header
+            })
+            .then(res => res.json())
+            .then(data =>{
+                if(data.data.length < 0){
+                    console.log('hit')
+                }
+            })
+        })
+    }
+    
     // Fetch Channels List
     async function getChannels(){
         try {
@@ -32,6 +70,8 @@ export default function Dashboard() {
         
     }
     useEffect(()=>{
+        console.log('channel fetched')
+        console.log(channelList)
         getChannels()
     },[])
  
@@ -48,13 +88,7 @@ export default function Dashboard() {
 
         getUsers()
     }, [])
-    useEffect(()=>{
-        console.log(allUsers)
-    },[])
-    // useEffect(()=>{
-    //     console.log(channelId)
-    // },[channelId])
-    // getChannelDetails()
+
     async function getChannelDetails(){
         const getChannelDetailsResponse = await fetch(`http://206.189.91.54/api/v1/channels/${receiverId}`,{
             method: 'GET',
@@ -74,7 +108,7 @@ export default function Dashboard() {
                             maxWidth= 'xl'
                             height='xl'>
                                 <div className="sidebarWrapper">
-                                    <Sidebar getChannels={getChannels}/>
+                                    <Sidebar getChannels={getChannels} getMessages={getMessages}/>
                                 </div>
                                 <div className="viewportWrapper">
                                     <Viewport/>

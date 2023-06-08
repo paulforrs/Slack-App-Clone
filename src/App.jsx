@@ -10,8 +10,9 @@ import LogIn from './components/Auth/LogIn/LogIn'
 function App() { 
   const [user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')) || null)
   const [header, setHeader] = useState(JSON.parse(sessionStorage.getItem('header')) || null)
-  const [allUsers, setAllUsers] = useState('')
+  const [allUsers, setAllUsers] = useState([])
   const [authUser] = useState(()=>userAuth)
+  const [allUsersId, setAllusersId] = useState([])
   const navigate = useNavigate()
 // User Authentication
   async function userAuth(prop){
@@ -41,7 +42,6 @@ function App() {
           console.log('error')
         }
         else{
-          console.log(body)
           setUser(body.data)
           console.log(body.data)
           navigate('/dashboard')

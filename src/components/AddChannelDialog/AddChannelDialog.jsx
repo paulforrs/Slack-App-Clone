@@ -1,9 +1,10 @@
 
-import { Button, Dialog, DialogTitle, DialogContent, Autocomplete, TextField, DialogActions } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { AllUsersContext, HeaderContext } from '../../Helper/Context';
-import AddUserSearchBar from '../AddUserSearchBar/AddUserSearchBar';
+import Autocomplete from '../Autocomplete/Autocomplete';
 import './style.css'
+import ContactChip from '../ContactChip/ContactChip';
 
 export default function AddChannelDialog(prop) {
     const {openChannelDialog, handleCloseChannelDialog, getChannels} = prop
@@ -12,10 +13,12 @@ export default function AddChannelDialog(prop) {
     const [name, setName] = useState('')
     const [user_ids, setUser_ids] = useState([])
     const [message, setMessage] = useState('')
+    const [memberList, setMemberList] = useState([])
     const handleCreateChannel =()=>{
         if(name.length > 0){
             createChannel()
             handleCloseChannelDialog()
+            setMemberList([])
         }
         else{
             alert('Channel name can\'t be empty')
@@ -23,6 +26,15 @@ export default function AddChannelDialog(prop) {
     }
     const handleChangeName=(e)=>{
         setName(e.target.value)
+    }
+    const generateContactChips=()=>{
+        return memberList.map((user)=>{
+            return <ContactChip key={user} title={user}/>
+        })
+    }
+    const handleCancel=()=>{
+        handleCloseChannelDialog()
+        setHeader([])
     }
     const createChannel= async ()=>{
         try{
@@ -54,7 +66,7 @@ export default function AddChannelDialog(prop) {
     }
     useEffect(()=>{
         return setName('')
-        
+ 
     },[])
     return (
         <>
@@ -72,10 +84,14 @@ export default function AddChannelDialog(prop) {
                             variant="standard"
                             onChange={handleChangeName}
                         />
-                        <AddUserSearchBar/>
+                        <div>
+                            {generateContactChips()}
+                        </div>
+                        <Autocomplete setMemberList={setMemberList} memberList={memberList}/>
+                        
                     </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseChannelDialog}>Cancel</Button>
+                    <Button onClick={handleCancel}>Cancel</Button>
                     <Button onClick={handleCreateChannel}>Create Channel</Button>
                 </DialogActions>
             </Dialog>
