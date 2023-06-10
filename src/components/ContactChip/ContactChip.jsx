@@ -1,14 +1,25 @@
+import { useRef } from 'react'
+import './style.css'
 export default function ContactChip(prop) {
-    const {title} = prop
-    console.log(title)
+    const {title, setMemberList, user_ids, userId} = prop
     const handleCloseBtn = (e)=>{
-        e.parentElement.style.display = 'none'
+        console.log(user_ids)
+        console.log(userId)
+        console.log(e.target.id)
+        const index = user_ids.indexOf(Number(e.target.id))
+        console.log(index)
+        setMemberList(prev=>{
+            prev.splice(index, 1)
+            return [...prev]
+        })
     }
     return (
         <div className="chip">
-            <img src="img_avatar.jpg" alt="Person" width="96" height="96"/>
+            <span className="material-symbols-outlined">
+                account_circle
+            </span>
             {title}
-            <span className="closebtn" onClick={handleCloseBtn}>&times;</span>
+            <span className="closebtn" onClick={handleCloseBtn} id={userId}>&times;</span>
         </div>
     )
 }

@@ -1,0 +1,21 @@
+.sender{
+    margin-left: auto;
+    text-align: right;
+}
+.message{
+    width: 200px;
+    max-width: 600px;
+    background-color: gainsboro;
+    padding: 0 20px;
+    border-radius: 10px;
+}
+.messageWrapper{
+    margin: 10px;
+    display: flex;
+}
+.name{
+    margin: 0;
+}
+.time{
+    margin: 5px 0;
+}

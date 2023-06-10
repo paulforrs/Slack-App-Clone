@@ -24,8 +24,8 @@ export default function Autocomplete(prop) {
 
   function handleUserClick(user){
     setMemberList(prev =>{
-      if(prev.indexOf(user.uid)===-1){
-        return [...prev, user.uid]
+      if(prev.indexOf(user)===-1){
+        return [...prev, user]
       }
       else{
         return [...prev]
@@ -36,11 +36,11 @@ export default function Autocomplete(prop) {
   function generateList(){
     return filteredUsers.map(user=>{
       const existingTag = ()=>{
-        if(memberList.indexOf(user.uid) != -1){
-          return 'active'
+        if(memberList.indexOf(user) != -1){
+          return 'active contactList'
         }
         else{
-          return ''
+          return 'contactList'
         }
       }
       return <li key={user.id} onClick={()=>handleUserClick(user)} className={existingTag()}>{user.uid}</li>
@@ -51,7 +51,7 @@ export default function Autocomplete(prop) {
   return (
     <div>
       <input type="text" value={searchUser} onChange={(e)=>setSearchUser(e.target.value)}/>
-      <div>
+      <div className='list-wrapper'>
         <ul>
           {generateList()}
         </ul>

@@ -5,7 +5,7 @@ import { ReceiverIdContext, HeaderContext, MessagesContext, ReceiverClassContext
 
 
 export default function AccordionList(prop) {
-    const {list, receiver, getMessages} = prop
+    const {list, receiver, getMessages, getDetails} = prop
     const {receiverId, setReceiverId} = useContext(ReceiverIdContext)
     const {messages, setMessages} = useContext(MessagesContext)
     const {header, setHeader} = useContext(HeaderContext)
@@ -37,6 +37,11 @@ export default function AccordionList(prop) {
                     }}
                     primary={elem.name}
                 />
+                <div className='channel-menu'>
+                    <span className="material-symbols-outlined" onClick={()=>{getDetails(receiverId)}}>
+                        more_vert
+                    </span>
+                </div>
             </ListItem>
     )
             

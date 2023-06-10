@@ -5,3 +5,20 @@
 .active{
     font-weight: 700;
 }
+.contactList{
+    height: 30px;
+    text-decoration: none;
+    list-style: none;
+    padding: 10px;
+}
+.contactList:hover{
+    background-color: gray;
+}
+.list-wrapper{
+    position: fixed;
+    background: white;
+    z-index: 1;
+}
+ul{
+    padding: 0;
+}

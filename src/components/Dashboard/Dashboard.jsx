@@ -89,13 +89,7 @@ export default function Dashboard() {
         getUsers()
     }, [])
 
-    async function getChannelDetails(){
-        const getChannelDetailsResponse = await fetch(`http://206.189.91.54/api/v1/channels/${receiverId}`,{
-            method: 'GET',
-            headers: header
-        })
-        const body = await getChannelDetailsResponse.json()
-    }
+    
  
     return (
         <div className="dashboardWrapper">  

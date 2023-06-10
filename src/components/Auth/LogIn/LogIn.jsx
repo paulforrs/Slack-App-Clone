@@ -1,5 +1,6 @@
 import { useContext , useState} from "react"
 import { UserContext, HeaderContext, UserAuthContext } from "../../../Helper/Context"
+import './style.css'
 
 export default function LogIn() {
     const {user, setUser} = useContext(UserContext)
@@ -18,13 +19,15 @@ export default function LogIn() {
         authUser({email, password})
     }
     return (
-        <div>
-            <h1>Log In</h1>
-            <form action="">
-                <input onChange={handleChangeEmail} type="text" value={email}/>
-                <input onChange={handlePasswordChange} type="password" value={password}/>
-                <button type="submit" onClick={handleSubmit}>Log in</button>
-            </form>
+        <div className="login-page">
+            <div className="login-wrapper">
+                <h1>Log In</h1>
+                <form action="">
+                    <input onChange={handleChangeEmail} type="text" value={email} className="login"/>
+                    <input onChange={handlePasswordChange} type="password" value={password} className="login"/>
+                    <button type="submit" onClick={handleSubmit} className="login">Log in</button>
+                </form>
+            </div>
         </div>
     )
 }

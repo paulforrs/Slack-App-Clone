@@ -26,10 +26,6 @@ function App() {
                     password,
                 })
         })
-        // const accessToken =  response.headers.get('access-token')
-        // const client =  response.headers.get('client')
-        // const expiry =  response.headers.get('expiry')
-        // const uid =   response.headers.get('uid')
         const body =  await response.json()
         setHeader({
             'Content-Type': 'application/json',
@@ -43,6 +39,7 @@ function App() {
         }
         else{
           setUser(body.data)
+          console.log(body.data)
           console.log(body.data)
           navigate('/dashboard')
         }

@@ -1,6 +1,7 @@
 import{ useContext, useEffect,useRef} from 'react'
 import { MessagesContext } from '../../Helper/Context'
 import MessageItem from './MessageItem'
+import './style.css'
 
 export default function Message() {
     const {messages, setMessages} = useContext(MessagesContext)
@@ -14,7 +15,7 @@ export default function Message() {
     useEffect(() => {
         const scrollableElement = scrollableRef.current;
         scrollableElement.scrollIntoView({ block: 'end' });
-      })
+      },[])
     return (
         <div ref={scrollableRef} >
             {populateMessages(messages)}

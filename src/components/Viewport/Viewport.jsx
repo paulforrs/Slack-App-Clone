@@ -15,7 +15,7 @@ export default function Viewport() {
     return (
         <div className='viewport' id='viewportContainer'>
             <div id='messagesContainer'>
-                <Messages/>
+                {receiverId ? <Messages/>: <h1>Welcome</h1>}
             </div>
             <SendInput/>
         </div>
